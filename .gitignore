@@ -1,0 +1,10 @@
+#Virtual Environment
+venv
+
+#Environment Config Variables
+Auth/.env
+
+#Migrations
+users/migrations
+
+.idea
