@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class User(AbstractUser):
-    name = models.CharField(max_length=255, blank=True)
+    name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
 
@@ -17,6 +17,7 @@ class User(AbstractUser):
 
 
 class LinkDetails(models.Model):
+    objects = None
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
     icon_url = models.CharField(max_length=255, blank=True)

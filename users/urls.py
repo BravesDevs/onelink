@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import RegisterView, LoginView, UserView, LogOutView, AddLinkView, GetLinksView, UpdateLinksView
+from .views import RegisterView, LoginView, UserView, LogOutView, AddLinkView, GetLinksView, UpdateLinksView, GetUserLink
 
 urlpatterns = [
     path('register', RegisterView.as_view(), name='register'),
@@ -9,5 +9,6 @@ urlpatterns = [
     path('logout', LogOutView.as_view(), name='logout'),
     path('link', AddLinkView.as_view(), name='link'),
     path('getlinks', GetLinksView.as_view(), name='get-links'),
-    path('updatelinks', UpdateLinksView.as_view(), name='update-links')
+    path('updatelinks', UpdateLinksView.as_view(), name='update-links'),
+    path('links/<str:name>/<str:link>', GetUserLink.as_view(), name='get-user-link'),
 ]

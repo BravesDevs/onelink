@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from .serializers import UserSerializer, UserLinksSerializer
-from .models import User, UserLinks
+from .models import User, UserLinks, LinkDetails
 from .utils.helpers import validate_token
 
 import jwt
@@ -128,3 +128,23 @@ class UpdateLinksView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+
+
+class GetUserLink(APIView):
+
+    @staticmethod
+    def get(name, link):
+        user = User.objects.filter(name=name).first()
+        if user is None:
+            raise AuthenticationFailed('User not found')
+
+        link_details = LinkDetails.objects.filter(title=link).first()
+        if link is None:
+            raise AuthenticationFailed('Link not found')
+
+        user_link = UserLinks.objects.filter(user_id=user.id, link_id=link_details.id).first()
+
+        if user_link is None:
+            raise AuthenticationFailed('User link not found')
+
+        return Response({'type': link, 'link': user_link.link_url})
